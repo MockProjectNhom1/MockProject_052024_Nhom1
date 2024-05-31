@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homes in your area</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        .container1{
+            width: 100%;
+            margin: 0;
+            height: 100vh;
+            background-image: url('https://images.trvl-media.com/lodging/18000000/17070000/17067800/17067716/50747d41.jpg?impolicy=resizecrop&rw=1200&ra=fi');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        header{
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            background-color: gray;
+        }
+        .container1 .link a{
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+        }
+        .container1 .link{
+            display: flex;
+            align-items: flex-end;
+            margin-left: 40px;
+        }
+        .container1 .nav{
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 0px 100px;
+            border-radius: 0px 0px 80px 80px;
+        }
+        .container1 .nav a{
+            text-decoration: none;
+            color: black;
+            font-size: 20px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .container1 .login{
+            margin-right: 40px;
+        }
+        .container1 .login button{
+            color: white;
+            border: 1px solid white;
+            background-color: gray;
+            border-radius: 15px;
+            padding: 5px 20px;
+            margin-top: 40px;
+        }
+        .container2 main{
+            margin-left: 40px;
+        }
+        .container2 main h1{
+            width: 50%;
+            color: white;
+            font-size: 80px;
+        }
+        .container2 .box{
+            width: 40%;
+            display: flex;
+            padding: 10px;
+            background-color: rgb(145, 141, 141);
+            border-radius: 10px;
+        }
+        .container2 .box .search{
+            width: 40%;
+            margin-right: 50px;
+        }
+        .container2 .box .search input{
+            width: 100%;
+            height: 35px;
+            border: none;
+            background-color: rgb(91, 87, 87);
+            color: white;
+            border-radius: 5px;
+        }
+        .container2 .box .select{
+            width: 35%;
+            display: flex;
+            margin-right: 30px;
+        }
+        .container2 .box .select button{
+            width: 30%;
+            height: 35px;
+            background-color:  rgb(91, 87, 87);
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+        .container2 .icon {
+            display: flex;
+            align-items: center;
+        }
+        .container2 button{
+            border: none;
+            background-color: rgb(145, 141, 141);
+        }
+        .container2 .box .icon i{
+            font-size: 15px;
+            padding: 10px;
+            background-color: orange;
+            border-radius: 5px;
+        }
+        .container2 .box2{
+            width: 21%;
+            color: white;
+            float: right;
+            margin-right: 100px;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .swiper-container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px 0;
+            position: relative; /* Ensure positioning context */
+        }
+        .swiper-slide {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .property-details {
+            padding: 10px;
+            text-align: center;
+        }
+        .property-details h3 {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .property-details p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        .property-details .price {
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+        }
+        .swiper-button-next, .swiper-button-prev {
+            color: #333;
+            position: absolute;
+            top: 50%; /* Center vertically */
+            transform: translateY(-50%);
+            width: 27px;
+            height: 44px;
+            background-size: 27px 44px;
+        }
+        .swiper-button-next {
+            right: 10px; /* Position to the right */
+        }
+        .swiper-button-prev {
+            left: 10px; /* Position to the left */
+        }
+    </style>
+</head>
+<body>
+<div class="container1">
+    <header>
+        <div class="link">
+            <a href=""><big>Buyme.</big>com</a>
+        </div>
+        <div class="nav">
+            <a href="">Buy</a>
+            <a href="">Sell</a>
+            <a href="">Agent</a>
+        </div>
+        <div class="login">
+            <button>Login</button>
+        </div>
+    </header>
+    <div class="container2">
+        <main>
+            <h1>Explore your place to stay</h1>
+            <div class="box">
+                <div class="search">
+                    <input type="text" placeholder=" Enter city, address or zip code">
+                </div>
+                <div class="select">
+                    <button>Home</button>
+                    <button>Agent</button>
+                    <button>Offices</button>
+                </div>
+                <div class="icon">
+                    <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+            </div>
+            <div class="box2">
+                <h2>It's our goal to know your expenctations and guide you through the process. We're in your corner.</h2>
+                <p>Don't worry about the quality of the service.</p>
+            </div>
+        </main>
+    </div>
+</div>
+<h1>Homes in your area</h1>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide" th:each="property : ${propertyList}">
+            <div class="product">
+                <img th:src="${property.imageURL}" alt="Property Image">
+                <div class="product-details">
+                    <h3 th:text="${property.propertyType}"></h3>
+                    <p th:text="${property.numbersOfBedRooms + ' bedrooms'}"></p>
+                    <p th:text="${property.squareFootage + 'm²'}"></p>
+                    <span th:text="'$' + ${property.priceRange}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Arrows -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+</div>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 5,
+        spaceBetween: 30,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        loop: true
+    });
+</script>
+<!-- Swiper -->
+
+<!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+</body>
+</html>

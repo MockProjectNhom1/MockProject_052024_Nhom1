@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buyme.com</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet"  th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" th:href="@{/fontawesome/all.css}"/>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Buyme.<span class="com">com</span></a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Buy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sell</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Your Transaction</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="btn btn-outline-primary" href="#">Log in</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid background">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-md-6 col-lg-4">
+                <div class="card p-4">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Login</h5>
+                        <form th:action="@{/login}" method="post">
+                            <div th:if="${param.error}">
+                                <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+                            </div>
+                            <div th:if="${param.logout}">
+                                <p class="text-warning">You have been logged out.</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="username@gmail.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <a href="#" class="float-right">Forgot Password?</a>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                            <div class="text-center mt-3">or continue with</div>
+                            <div class="d-flex justify-content-around mt-2">
+                                <button class="btn btn-lg btn-secondary fab fa-google">&nbsp;&nbsp;Continue with Google</button>
+                            </div>
+                        </form>
+                        <div class="text-center mt-3">
+                            <span>Don't have an account yet? <a href="#">Register for free</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center text-lg-start bg-light text-muted">
+        <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+            <div class="me-5 d-none d-lg-block">
+                <span>American real estate corporation</span>
+            </div>
+            <div>
+                <a href="#" class="me-4 text-reset">
+                    <i class="fab fa-google"></i>
+                </a>
+                <a href="#" class="me-4 text-reset">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="me-4 text-reset">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <a href="#" class="me-4 text-reset">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+        </section>
+
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <div class="row mt-3">
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <i class="fas fa-gem me-3"></i>Buyme.<span class="com">com</span>
+                        </h6>
+                        <p>
+                            American real estate corporation.
+                            Keangnam Landmark in America
+                        </p>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Regulations
+                        </h6>
+                        <p>
+                            <a href="#" class="text-reset">Privacy Policy</a>
+                        </p>
+                        <p>
+                            <a href="#" class="text-reset">Terms of Agreement</a>
+                        </p>
+                    </div>
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            Follow Us
+                        </h6>
+                        <p>
+                            <a href="#" class="text-reset">Google Play</a>
+                        </p>
+                        <p>
+                            <a href="#" class="text-reset">App Store</a>
+                        </p>
+                    </div>
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                        <p><i class="fas fa-home me-3"></i> Keangnam Landmark in America</p>
+                        <p><i class="fas fa-envelope me-3"></i> info@example.com</p>
+                        <p><i class="fas fa-phone me-3"></i> (550) 891-2314</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="text-center text-white p-4" style="background-color: rgba(29, 29, 29, 100%);">
+            © 2024 By Me Franchise Systems LLC. All Rights Reserved.
+        </div>
+    </footer>
+</body>
+</html>

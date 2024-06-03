@@ -1,0 +1,26 @@
+body {
+    background: url('../images/imageheader.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.navbar-brand .com {
+    color: #007bff;
+}
+
+.background {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.85);
+    border: none;
+    border-radius: 10px;
+}
+
+.footer {
+    background: rgba(29, 29, 29, 0.8);
+}

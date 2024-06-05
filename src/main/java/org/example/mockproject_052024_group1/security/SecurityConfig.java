@@ -30,9 +30,11 @@ public class SecurityConfig {
         http
                 .csrf((AbstractHttpConfigurer::disable))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/auth/**",
-                                         "/hello"
+                        .requestMatchers("/auth/**"
                         ).permitAll()
+                        .requestMatchers("/css/**", "/images/**", "/js/**").permitAll()
+                        .requestMatchers("/user").hasAnyAuthority("CUSTOMER", "ADMIN")
+                        .requestMatchers("/admin").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

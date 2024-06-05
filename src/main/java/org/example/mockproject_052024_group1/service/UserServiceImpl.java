@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Optional<User> getByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByEmail(username);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> updateUser(User user) throws UsernameNotFoundException {
-        userRepository.findByUsername(user.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + user.getUsername()));
+        userRepository.findByEmail(user.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + user.getEmail()));
 
         Role role = roleService.createRoleIfNotExists(user.getRole().getRoleName());
         user.setRole(role);

@@ -2,6 +2,7 @@ package org.example.mockproject_052024_group1.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @AllArgsConstructor
 @Component
@@ -33,7 +35,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String jwtToken = parseJwt(request);
 
             Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
-            logger.info("JwtAuthenticationFilter token: {}", jwtToken);
+            logger.info("JwtAuthenticationFilter JWT Header token: {}", jwtToken);
+
+            if (jwtToken == null && request.getCookies() != null) {
+                Cookie[] cookieArr = request.getCookies();
+                for (Cookie cookie : cookieArr) {
+                    if (cookie.getName().equals("Authorization")) {
+                        jwtToken = cookie.getValue();
+                        logger.info("JwtAuthenticationFilter JWT Cookie token: {}", jwtToken);
+                        break;
+                    }
+                }
+            }
 
             if (jwtToken == null) {
                 filterChain.doFilter(request, response);

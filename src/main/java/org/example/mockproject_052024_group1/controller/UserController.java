@@ -36,4 +36,9 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/admin")
+    public ResponseEntity<?> admin() {
+        return ResponseEntity.ok("ADMIN ENDPOINT");
+    }
+
 }

@@ -1,88 +1,78 @@
 package org.example.mockproject_052024_group1.controller;
 
-import jakarta.validation.Valid;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.example.mockproject_052024_group1.dto.LoginRequest;
 import org.example.mockproject_052024_group1.dto.RegisterRequest;
-import org.example.mockproject_052024_group1.entities.ERole;
-import org.example.mockproject_052024_group1.entities.User;
-import org.example.mockproject_052024_group1.entities.Role;
-import org.example.mockproject_052024_group1.repository.RoleRepository;
-import org.example.mockproject_052024_group1.security.JwtUtils;
-import org.example.mockproject_052024_group1.service.UserService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.example.mockproject_052024_group1.service.AuthService;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 @AllArgsConstructor
-@RestController
+@Controller
 @RequestMapping("/auth")
 public class AuthController {
 
-    private AuthenticationManager authenticationManager;
-
-    private UserDetailsService userDetailsService;
-
-    private UserService userService;
-
-    private RoleRepository roleRepository;
-
-    private PasswordEncoder passwordEncoder;
-
-    private JwtUtils jwtUtils;
+    private AuthService authService;
 
     private static final Logger logger = Logger.getLogger(AuthController.class.getName());
 
+    @GetMapping("/login")
+    public String login(Model model) {
+        model.addAttribute("loginRequest", new LoginRequest());
+        return "login";
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest loginRequest) {
+    public String login(Model model, @ModelAttribute LoginRequest loginRequest, HttpServletResponse response) {
         try {
-            String username = loginRequest.getUsername();
-            String password = loginRequest.getPassword();
+            String jwt = authService.loginUser(loginRequest, response);
 
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            logger.info("Login successful. JWT: " + jwt);
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            String jwt = jwtUtils.generateAccessToken(userDetails);
-
-            return ResponseEntity.ok(jwt);
+            return "loginSuccess";
 
         } catch (BadCredentialsException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            logger.warning(e.getMessage());
+            model.addAttribute("error", e.getMessage());
+            return "login";
         }
     }
 
+
+    @GetMapping("/register")
+    public String register(Model model) {
+        model.addAttribute("registerRequest", new RegisterRequest());
+        return "register";
+    }
+
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest registerRequest) {
+    public String register(Model model, @ModelAttribute("registerRequest") RegisterRequest registerRequest) {
         try {
+            registerRequest.setRoleName("CUSTOMER");
 
-            ERole roleName = ERole.valueOf(registerRequest.getRoleName());
+            if(!registerRequest.getPassword().equals(registerRequest.getConfirmPassword())) {
+                model.addAttribute("error", "Passwords do not match");
+                return "register";
+            }
 
-            User newUser = User.builder()
-                    .username(registerRequest.getUsername())
-                    .password(passwordEncoder.encode(registerRequest.getPassword()))
-                    .role(Role.builder().roleName(roleName).build())
-                    .firstName(registerRequest.getFirstName())
-                    .lastName(registerRequest.getLastName())
-                    .email(registerRequest.getEmail())
-                    .build();
+            logger.info(registerRequest.toString());
 
-            userService.createUser(newUser);
+            authService.registerUser(registerRequest);
 
-            return ResponseEntity.ok(userService.getByUsername(registerRequest.getUsername()));
+            model.addAttribute("loginRequest", new LoginRequest());
+
+            return "login";
 
         } catch (Exception e) {
             logger.warning(e.getMessage());
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return e.getMessage();
         }
     }
 }

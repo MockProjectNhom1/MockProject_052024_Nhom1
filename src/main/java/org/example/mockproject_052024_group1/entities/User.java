@@ -28,7 +28,7 @@ public class User {
 
     @NotNull
     @Column(nullable = false, unique = true)
-    private String username;
+    private String email;
 
     @NotNull
     @JsonIgnore
@@ -36,10 +36,8 @@ public class User {
     private String password;
 
     @NotNull(message = "Role is required")
-    @ManyToOne
+    @ManyToOne()
     private Role role;
-
-    private String email;
 
     @Column(columnDefinition = "nvarchar(255)")
     private String firstName;
